@@ -2,34 +2,92 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>แปลงสกุลเงิน</title>
+  <title>Currency Converter | Business Edition</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+      color: #333;
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #1f6391;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 1.2em;
+      text-align: center;
+      color: #27ae60;
+    }
+  </style>
 </head>
 <body>
-  <h1>แปลงสกุลเงิน</h1>
+  <h1>Currency Converter</h1>
 
-  <label>จาก:</label>
-  <input id="from" value="THB">
-  <label>เป็น:</label>
-  <input id="to" value="USD">
-  <label>จำนวน:</label>
+  <label for="from">From Currency:</label>
+  <input id="from" list="currencies" value="THB">
+
+  <label for="to">To Currency:</label>
+  <input id="to" list="currencies" value="USD">
+
+  <label for="amount">Amount:</label>
   <input id="amount" type="number" value="1">
-  <button onclick="convert()">แปลง</button>
 
-  <p id="result"></p>
+  <datalist id="currencies">
+    <option value="THB"><option value="USD"><option value="EUR"><option value="JPY">
+    <option value="GBP"><option value="CHF"><option value="SEK"><option value="NOK">
+    <option value="DKK"><option value="PLN"><option value="HUF"><option value="CZK">
+    <option value="RON"><option value="CNY"><option value="KRW"><option value="INR">
+    <option value="IDR"><option value="MYR"><option value="SGD"><option value="VND">
+    <option value="PHP">
+  </datalist>
+
+  <button onclick="convertCurrency()">Convert</button>
+
+  <div id="result"></div>
 
   <script>
-    async function convert() {
-      const from = document.getElementById('from').value;
-      const to = document.getElementById('to').value;
-      const amount = document.getElementById('amount').value;
+    async function convertCurrency() {
+      const from = document.getElementById('from').value.toUpperCase();
+      const to = document.getElementById('to').value.toUpperCase();
+      const amount = parseFloat(document.getElementById('amount').value);
 
-      const res = await fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`);
-      const data = await res.json();
-
-      if (data.result) {
-        document.getElementById('result').innerText = `${amount} ${from} = ${data.result.toFixed(2)} ${to}`;
-      } else {
-        document.getElementById('result').innerText = 'เกิดข้อผิดพลาดในการแปลง';
+      const url = `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.result) {
+          document.getElementById('result').innerText = `${amount} ${from} = ${data.result.toFixed(2)} ${to}`;
+        } else {
+          document.getElementById('result').innerText = 'Conversion failed. Please check currency codes.';
+        }
+      } catch (error) {
+        document.getElementById('result').innerText = 'Error connecting to exchange rate API.';
       }
     }
   </script>
