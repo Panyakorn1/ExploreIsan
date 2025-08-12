@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>เว็บแปลงสกุลเงิน</title>
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background: linear-gradient(to right, #e3f2fd, #ffffff);
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #1565c0;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #1565c0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0d47a1;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>แปลงสกุลเงิน</h1>
+    <label for="amount">จำนวนเงิน</label>
+    <input type="number" id="amount" placeholder="เช่น 100" required>
+
+    <label for="from">จากสกุลเงิน</label>
+    <select id="from">
+      <option value="THB">THB - บาท</option>
+      <option value="USD">USD - ดอลลาร์</option>
+      <option value="EUR">EUR - ยูโร</option>
+      <option value="JPY">JPY - เยน</option>
+      <option value="GBP">GBP - ปอนด์</option>
+    </select>
+
+    <label for="to">เป็นสกุลเงิน</label>
+    <select id="to">
+      <option value="USD">USD - ดอลลาร์</option>
+      <option value="THB">THB - บาท</option>
+      <option value="EUR">EUR - ยูโร</option>
+      <option value="JPY">JPY - เยน</option>
+      <option value="GBP">GBP - ปอนด์</option>
+    </select>
+
+    <button onclick="convertCurrency()">แปลงค่า</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function convertCurrency() {
+      const amount = document.getElementById("amount").value;
+      const from = document.getElementById("from").value;
+      const to = document.getElementById("to").value;
+
+      if (!amount || isNaN(amount)) {
+        alert("กรุณากรอกจำนวนเงินที่ถูกต้อง");
+        return;
+      }
+
+      const url = `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const result = data.result.toFixed(2);
+        document.getElementById("result").innerText = `${amount} ${from} = ${result} ${to}`;
+      } catch (error) {
+        document.getElementById("result").innerText = "เกิดข้อผิดพลาดในการแปลงสกุลเงิน";
+      }
+    }
+  </script>
+</body>
+</html>
