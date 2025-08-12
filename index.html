@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>เที่ยวอีสาน - สถานที่ท่องเที่ยวธรรมชาติ</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun&family=Mitr&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <header>
+    <h1>🌿 เที่ยวอีสาน</h1>
+    <p>รวมสถานที่ท่องเที่ยวธรรมชาติในภาคตะวันออกเฉียงเหนือ</p>
+  </header>
+
+  <section class="places">
+    <h2>📍 สถานที่แนะนำ</h2>
+    <div class="filters">
+  <select id="typeFilter" onchange="filterByType()">
+    <option value="">-- เลือกประเภท --</option>
+    <option value="ธรรมชาติ">ธรรมชาติ</option>
+    <option value="วัด">วัด</option>
+    <option value="โบราณสถาน">โบราณสถาน</option>
+  </select>
+
+  <select id="provinceFilter" onchange="filterByProvince()">
+    <option value="">-- เลือกจังหวัด --</option>
+    <option value="อุดรธานี">อุดรธานี</option>
+    <option value="หนองคาย">หนองคาย</option>
+    <option value="ขอนแก่น">ขอนแก่น</option>
+    <option value="นครราชสีมา">นครราชสีมา</option>
+    <option value="เลย">เลย</option>
+    <option value="อุบลราชธานี">อุบลราชธานี</option>
+  </select>
+</div>
+
+    <input type="text" id="searchBox" placeholder="🔎 ค้นหาสถานที่..." onkeyup="filterPlaces()">
+    <div class="grid">
+
+      <!-- สถานที่ 1 -->
+<div class="card" data-type="ธรรมชาติ" data-province="อุดรธานี">
+  <img src="https://scontent.fkkc4-1.fna.fbcdn.net/v/t39.30808-6/481130673_941401688207577_2160363704532621871_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_ohc=QkFYuq_9KXUQ7kNvwE1mOWL&_nc_oc=AdmDeQiWxNjWbzPimPPsyHPojpwqNYH0NHXxxArTU2UzcgTjiyLDNgVL0os4svW9_a-YJlbrjImxFNoHk6RtD8i2&_nc_zt=23&_nc_ht=scontent.fkkc4-1.fna&_nc_gid=GgZZXd_HT2voQTsEliz8xg&oh=00_AfW1KfkP7kgNVsk7osHWN4MiHFD1ULx1LIkHdtA-hnvtSQ&oe=68A163C0">
+  <h3>ทะเลบัวแดง กุมภวาปี</h3>
+  <p>ชมดอกบัวสีชมพูบานสะพรั่งในช่วง ต.ค. - ก.พ.</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=ทะเลบัวแดง+กุมภวาปี" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 2 -->
+<div class="card" data-type="ธรรมชาติ" data-province="อุดรธานี">
+  <img src="https://esan108.com/wp-content/uploads/2017/10/%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B9%8C.jpg" alt="สวนหนองประจักษ์">
+  <h3>สวนหนองประจักษ์</h3>
+  <p>สวนสาธารณะริมทะเลสาบ มีเส้นทางจักรยาน</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=สวนหนองประจักษ์+อุดรธานี" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 3 -->
+<div class="card" data-type="ธรรมชาติ" data-province="อุดรธานี">
+  <img src="https://i.ytimg.com/vi/mn5leA9H2UU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLANPNFS-cd81MIqYIcOy39w3uY5zA" alt="ทุ่งศรีเมือง">
+  <h3>ทุ่งศรีเมือง</h3>
+  <p>แลนด์มาร์คกลางเมืองอุดรธานี เปิด 24 ชั่วโมง</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=ทุ่งศรีเมือง+อุดรธานี" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 4 -->
+<div class="card" data-type="วัด" data-province="หนองคาย">
+  <img src="https://cms.dmpcdn.com/travel/2021/04/11/95e7c5c0-9a83-11eb-9b54-f7321a53a72c_original.jpg" alt="ทะเลบัวแดงบ้านดอนคง">
+  <h3>วัดผาตากเสื้อ</h3>
+  <p>ที่เที่ยวหนองคายจุดชมวิวทะเลหมอกสุดเสียว Skywalk บนหน้าผา</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=วัดผาตากเสื้อ+หนองคาย" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 5 -->
+<div class="card" data-type="โบราณสถาน" data-province="อุดรธานี">
+  <img src="https://cms.dmpcdn.com/travel/2021/10/12/f0b86bb0-2b0d-11ec-bfd9-97090d4e24ba_original.jpg" alt="พิพิธภัณฑ์บ้านเชียง">
+  <h3>พิพิธภัณฑ์บ้านเชียง</h3>
+  <p>แหล่งโบราณคดีระดับโลก แสดงวัฒนธรรมยุคก่อนประวัติศาสตร์</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=พิพิธภัณฑ์+บ้านเชียง" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 6 -->
+<div class="card" data-type="วัด" data-province="อุดรธานี">
+  <img src="https://cms.dmpcdn.com/travel/2021/03/07/209de0f0-7eff-11eb-822c-1174bade5fd3_original.jpg" alt="วัดโพธิสมภรณ์">
+  <h3>วัดโพธิสมภรณ์</h3>
+  <p>วัดพระอารามหลวงกลางเมืองอุดรธานี</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=วัดโพธิสมภรณ์+อุดรธานี" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 7 -->
+<div class="card" data-type="วัด" data-province="อุดรธานี">
+  <img src="https://img.kapook.com/u/2017/Tanapol/travel/december/watphutong/watpu700.jpg" alt="วัดภูทองเทพนิมิต">
+  <h3>วัดภูทองเทพนิมิต</h3>
+  <p>วัดบนภูเขา วิวสวยสงบ เหมาะแก่การปฏิบัติธรรม</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=วัดภูทองเทพนิมิต" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 8 -->
+<div class="card" data-type="โบราณสถาน" data-province="สกลนคร">
+  <img src="https://i.ytimg.com/vi/Eoe0KCNK6yc/maxresdefault.jpg" alt="กู่พันนา">
+  <h3>กู่พันนา</h3>
+  <p>ปราสาทหินโบราณในสกลนคร สะท้อนอารยธรรมขอม</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=กู่พันนา+สกลนคร" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 9 -->
+<div class="card" data-type="ธรรมชาติ" data-province="อุดรธานี">
+  <img src="https://cms.dmpcdn.com/travel/2020/10/12/11dd8c40-0c6e-11eb-a3b0-f9d575a2517d_original.jpg" alt="ภูฝอยลม">
+  <h3>ภูฝอยลม</h3>
+  <p>จุดชมวิวและสวนดอกไม้บนยอดเขาอุดรธานี</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=ภูฝอยลม+อุดรธานี" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 10 -->
+<div class="card" data-type="วัด" data-province="อุดรธานี">
+  <img src="https://cms.dmpcdn.com/travel/2022/06/20/293570d0-f054-11ec-9d0f-9d71a23d6f8d_webp_original.jpg" alt="วัดป่าภูก้อน">
+  <h3>วัดป่าภูก้อน</h3>
+  <p>วัดบนเขา มีพระนอนหินอ่อนขนาดใหญ่</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=วัดป่าภูก้อน" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 11 -->
+<div class="card" data-type="ธรรมชาติ" data-province="ขอนแก่น">
+  <img src="https://i.ytimg.com/vi/JQ4IqaqkZ8g/maxresdefault.jpg" alt="เขื่อนอุบลรัตน์">
+  <h3>เขื่อนอุบลรัตน์</h3>
+  <p>เขื่อนใหญ่ วิวสวย มีร้านอาหารริมน้ำ</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=เขื่อนอุบลรัตน์" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 12 -->
+<div class="card" data-type="ธรรมชาติ" data-province="นครราชสีมา">
+  <img src="https://tiewcamping.com/wp-content/uploads/2020/12/120192457_3880709021942601_8062498976209567920_Yimyam-Jintipa-Chumking-PP.jpg">
+  <h3>ผาเก็บตะวัน</h3>
+  <p>จุดชมพระอาทิตย์ตกในนครราชสีมา</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=ผาเก็บตะวัน" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 13 -->
+<div class="card" data-type="ธรรมชาติ" data-province="เลย">
+  <img src="https://opt-news.com/public/upload/userfiles/images/1735469543345.jpg" alt="อุทยานแห่งชาติภูเรือ">
+  <h3>อุทยานแห่งชาติภูเรือ</h3>
+  <p>อากาศเย็นตลอดปี เหมาะแก่การเดินป่า</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=อุทยานแห่งชาติภูเรือ" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 14 -->
+<div class="card" data-type="วัด" data-province="นครพนม">
+  <img src="https://cms.dmpcdn.com/travel/2021/11/22/7e6527c0-4b78-11ec-a5f8-7748d41e5dc7_webp_original.jpg" alt="วัดพระธาตุพนม">
+  <h3>วัดพระธาตุพนม</h3>
+  <p>พระธาตุศักดิ์สิทธิ์ริมโขง เป็นที่เคารพบูชา</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=วัดพระธาตุพนม" target="_blank">ดูเส้นทาง</a>
+</div>
+
+<!-- สถานที่ 15 -->
+<div class="card" data-type="ธรรมชาติ" data-province="อุบลราชธานี">
+  <img src="https://www.ecocar.co.th/uploads/10122563.jpg" alt="อุทยานแห่งชาติผาแต้ม">
+  <h3>อุทยานแห่งชาติผาแต้ม</h3>
+  <p>ภาพเขียนสีโบราณริมแม่น้ำโขง จุดชมพระอาทิตย์ขึ้น</p>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=อุทยานแห่งชาติผาแต้ม" target="_blank">ดูเส้นทาง</a>
+</div>
+
+
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 เที่ยวอีสาน | พัฒนาโดย ปัญญากร</p>
+  </footer>
+  
+  <script>
+function filterPlaces() {
+  const searchValue = document.getElementById("searchBox").value.toLowerCase();
+  const typeValue = document.getElementById("typeFilter").value;
+  const provinceValue = document.getElementById("provinceFilter").value;
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    const title = card.querySelector("h3").textContent.toLowerCase();
+    const description = card.querySelector("p").textContent.toLowerCase();
+    const cardType = card.getAttribute("data-type");
+    const cardProvince = card.getAttribute("data-province");
+
+    const matchSearch = title.includes(searchValue) || description.includes(searchValue);
+    const matchType = !typeValue || cardType === typeValue;
+    const matchProvince = !provinceValue || cardProvince === provinceValue;
+
+    if (matchSearch && matchType && matchProvince) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+// เชื่อมกับช่องค้นหาและ dropdown
+document.getElementById("searchBox").addEventListener("keyup", filterPlaces);
+document.getElementById("typeFilter").addEventListener("change", filterPlaces);
+document.getElementById("provinceFilter").addEventListener("change", filterPlaces);
+</script>
+
+
+</body>
+</html>
