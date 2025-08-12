@@ -2,25 +2,33 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>เว็บแปลงสกุลเงิน</title>
+  <title>แปลงสกุลเงิน | Currency Converter</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: 'Sarabun', sans-serif;
-      background: linear-gradient(to right, #e3f2fd, #ffffff);
+      background-color: #f4f6f8;
       margin: 0;
+      padding: 0;
+    }
+    .header {
+      background-color: #1a237e;
+      color: white;
       padding: 20px;
+      text-align: center;
     }
     .container {
-      max-width: 500px;
+      max-width: 900px;
       margin: auto;
-      background: #fff;
+      background: #ffffff;
       padding: 30px;
+      margin-top: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-    h1 {
-      text-align: center;
-      color: #1565c0;
+    h2 {
+      color: #1a237e;
+      margin-bottom: 20px;
     }
     label {
       display: block;
@@ -38,7 +46,7 @@
       margin-top: 20px;
       width: 100%;
       padding: 12px;
-      background-color: #1565c0;
+      background-color: #1a237e;
       color: white;
       border: none;
       border-radius: 5px;
@@ -46,7 +54,7 @@
       cursor: pointer;
     }
     button:hover {
-      background-color: #0d47a1;
+      background-color: #0d1b6b;
     }
     #result {
       margin-top: 20px;
@@ -54,41 +62,75 @@
       text-align: center;
       color: #2e7d32;
     }
+    canvas {
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
+  <div class="header">
+    <h1>ระบบแปลงสกุลเงิน</h1>
+    <p>รองรับสกุลเงินโซนเอเชีย พร้อมกราฟแนวโน้มย้อนหลัง 5 ปี</p>
+  </div>
+
   <div class="container">
-    <h1>แปลงสกุลเงิน</h1>
+    <h2>🔁 แปลงสกุลเงิน</h2>
     <label for="amount">จำนวนเงิน</label>
     <input type="number" id="amount" placeholder="เช่น 100" required>
 
     <label for="from">จากสกุลเงิน</label>
-    <select id="from">
-      <option value="THB">THB - บาท</option>
-      <option value="USD">USD - ดอลลาร์</option>
-      <option value="EUR">EUR - ยูโร</option>
-      <option value="JPY">JPY - เยน</option>
-      <option value="GBP">GBP - ปอนด์</option>
-    </select>
+    <select id="from"></select>
 
     <label for="to">เป็นสกุลเงิน</label>
-    <select id="to">
-      <option value="USD">USD - ดอลลาร์</option>
-      <option value="THB">THB - บาท</option>
-      <option value="EUR">EUR - ยูโร</option>
-      <option value="JPY">JPY - เยน</option>
-      <option value="GBP">GBP - ปอนด์</option>
-    </select>
+    <select id="to"></select>
 
     <button onclick="convertCurrency()">แปลงค่า</button>
     <div id="result"></div>
+
+    <h2>📊 แนวโน้มสกุลเงินย้อนหลัง 5 ปี (เทียบ USD)</h2>
+    <canvas id="currencyChart" width="800" height="400"></canvas>
   </div>
 
   <script>
+    const asianCurrencies = {
+      "THB": "บาทไทย",
+      "JPY": "เยนญี่ปุ่น",
+      "CNY": "หยวนจีน",
+      "KRW": "วอนเกาหลี",
+      "INR": "รูปีอินเดีย",
+      "SGD": "ดอลลาร์สิงคโปร์",
+      "MYR": "ริงกิตมาเลเซีย",
+      "PHP": "เปโซฟิลิปปินส์",
+      "VND": "ดองเวียดนาม",
+      "IDR": "รูเปียอินโดนีเซีย",
+      "HKD": "ดอลลาร์ฮ่องกง",
+      "BND": "ดอลลาร์บรูไน",
+      "MMK": "จ๊าดพม่า",
+      "LAK": "กีบลาว",
+      "BTN": "งุลตรัมภูฏาน",
+      "KGS": "ซอมคีร์กีซสถาน",
+      "MNT": "ทูกริกมองโกเลีย"
+    };
+
+    const fromSelect = document.getElementById("from");
+    const toSelect = document.getElementById("to");
+
+    for (const code in asianCurrencies) {
+      const optionFrom = document.createElement("option");
+      optionFrom.value = code;
+      optionFrom.textContent = `${code} - ${asianCurrencies[code]}`;
+      fromSelect.appendChild(optionFrom);
+
+      const optionTo = document.createElement("option");
+      optionTo.value = code;
+      optionTo.textContent = `${code} - ${asianCurrencies[code]}`;
+      toSelect.appendChild(optionTo);
+    }
+
     async function convertCurrency() {
       const amount = document.getElementById("amount").value;
-      const from = document.getElementById("from").value;
-      const to = document.getElementById("to").value;
+      const from = fromSelect.value;
+      const to = toSelect.value;
 
       if (!amount || isNaN(amount)) {
         alert("กรุณากรอกจำนวนเงินที่ถูกต้อง");
@@ -105,6 +147,65 @@
         document.getElementById("result").innerText = "เกิดข้อผิดพลาดในการแปลงสกุลเงิน";
       }
     }
+
+    async function loadChart() {
+      const currencies = ["THB", "JPY", "CNY", "KRW", "INR"];
+      const labels = [];
+      const datasets = [];
+
+      const today = new Date();
+      for (let i = 0; i < 5; i++) {
+        const year = today.getFullYear() - i;
+        labels.unshift(year.toString());
+      }
+
+      for (const currency of currencies) {
+        const dataPoints = [];
+        for (const year of labels) {
+          const date = `${year}-01-01`;
+          const url = `https://api.exchangerate.host/${date}?base=${currency}&symbols=USD`;
+          const response = await fetch(url);
+          const data = await response.json();
+          const rate = data.rates?.USD || 0;
+          dataPoints.push(rate);
+        }
+
+        datasets.push({
+          label: `${currency} → USD`,
+          data: dataPoints,
+          fill: false,
+          borderColor: getRandomColor(),
+          tension: 0.1
+        });
+      }
+
+      new Chart(document.getElementById("currencyChart"), {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: datasets
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            },
+            title: {
+              display: true,
+              text: 'แนวโน้มสกุลเงินเทียบ USD (ย้อนหลัง 5 ปี)'
+            }
+          }
+        }
+      });
+    }
+
+    function getRandomColor() {
+      const colors = ["#1a237e", "#c62828", "#2e7d32", "#f9a825", "#6a1b9a"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    loadChart();
   </script>
 </body>
 </html>
