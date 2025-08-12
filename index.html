@@ -3,68 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>แปลงสกุลเงิน</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    label, select, input { margin: 10px 0; display: block; }
-    button { padding: 10px 20px; }
-  </style>
 </head>
 <body>
   <h1>แปลงสกุลเงิน</h1>
 
-  <label for="from">จากสกุลเงิน:</label>
-  <input list="currencies" id="from" name="from" placeholder="เช่น THB">
-  
-  <label for="to">เป็นสกุลเงิน:</label>
-  <input list="currencies" id="to" name="to" placeholder="เช่น USD">
-
-  <datalist id="currencies">
-    <!-- โซนเอเชีย -->
-    <option value="THB">
-    <option value="JPY">
-    <option value="CNY">
-    <option value="KRW">
-    <option value="INR">
-    <option value="IDR">
-    <option value="MYR">
-    <option value="SGD">
-    <option value="VND">
-    <option value="PHP">
-    <!-- โซนยุโรป -->
-    <option value="EUR">
-    <option value="GBP">
-    <option value="CHF">
-    <option value="SEK">
-    <option value="NOK">
-    <option value="DKK">
-    <option value="PLN">
-    <option value="HUF">
-    <option value="CZK">
-    <option value="RON">
-  </datalist>
-
-  <label for="amount">จำนวนเงิน:</label>
-  <input type="number" id="amount" name="amount" value="1">
-
-  <button onclick="convertCurrency()">แปลงเงิน</button>
-  <button onclick="showGraph()">แสดงกราฟย้อนหลัง</button>
+  <label>จาก:</label>
+  <input id="from" value="THB">
+  <label>เป็น:</label>
+  <input id="to" value="USD">
+  <label>จำนวน:</label>
+  <input id="amount" type="number" value="1">
+  <button onclick="convert()">แปลง</button>
 
   <p id="result"></p>
 
   <script>
-    async function convertCurrency() {
+    async function convert() {
       const from = document.getElementById('from').value;
       const to = document.getElementById('to').value;
       const amount = document.getElementById('amount').value;
 
       const res = await fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`);
       const data = await res.json();
-      document.getElementById('result').innerText = `${amount} ${from} = ${data.result.toFixed(2)} ${to}`;
-    }
 
-    function showGraph() {
-      const to = document.getElementById('to').value;
-      window.location.href = `graph.html?currency=${to}`;
+      if (data.result) {
+        document.getElementById('result').innerText = `${amount} ${from} = ${data.result.toFixed(2)} ${to}`;
+      } else {
+        document.getElementById('result').innerText = 'เกิดข้อผิดพลาดในการแปลง';
+      }
     }
   </script>
 </body>
